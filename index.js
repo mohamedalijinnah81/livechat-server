@@ -1,8 +1,17 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const { default: mongoose } = require("mongoose");
+const cors = require("cors");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
+
+app.use(
+    cors({
+        origin: "*",
+    })
+);
+
 dotenv.config();
 
 const connectDB = async () => {
@@ -15,10 +24,11 @@ const connectDB = async () => {
 }
 
 connectDB();
-
+app.use(express.json());
 app.get("/", (req, res) => {
     res.send("API is running543..")
 });
+app.use("/user", userRoutes);
 
 const PORT = process.env.PORT || 5000;
 
