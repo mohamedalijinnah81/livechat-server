@@ -3,6 +3,8 @@ const dotenv = require("dotenv");
 const { default: mongoose } = require("mongoose");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
+const chatRoutes = require("./routes/chatRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 
 const app = express();
 
@@ -28,7 +30,10 @@ app.use(express.json());
 app.get("/", (req, res) => {
     res.send("API is running543..")
 });
+
 app.use("/user", userRoutes);
+app.use("/chat", chatRoutes);
+app.use("/message", messageRoutes);
 
 const PORT = process.env.PORT || 5000;
 
