@@ -27,18 +27,19 @@ const sendMessage = expressAsyncHandler(async (req, res) => {
     var newMessage = {
         sender: req.user._id,
         content: content,
-        chat: user._id,
+        chat: chatId,
     };
+    console.log(newMessage);
 
     try {
         var message = await Message.create(newMessage);
 
-        // console.log(message);
+        console.log(message);
         message = await message.populate("sender", "name");
         message = await message.populate("chat");
         message = await message.populate("receiver");
-        message = await message.populate(message, {
-            path: chat.users,
+        message = await message.populate("chat.users", {
+            // path: "chat.users",
             select: "name email",
         });
 

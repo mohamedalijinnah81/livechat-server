@@ -16,6 +16,8 @@ app.use(
 
 dotenv.config();
 
+app.use(express.json());
+
 const connectDB = async () => {
     try {
         const connect = await mongoose.connect(process.env.MONGO_URI);
@@ -36,5 +38,34 @@ app.use("/chat", chatRoutes);
 app.use("/message", messageRoutes);
 
 const PORT = process.env.PORT || 5000;
+const server = app.listen(PORT, console.log("Server is running.."));
 
-app.listen(PORT, console.log("Server is running.."));
+// const io = require("socket.io")(server, {
+//     cors: {
+//         origin: "*",
+//     },
+//     pingTimeout: 60000,
+// });
+
+// io.on("connection", (socket) => {
+//     socket.on("setup", (user) => {
+//         socket.join(user.data._id);
+//         socket.emit("connected");
+//     });
+
+//     socket.on("join chat", (room) => {
+//         socket.join(room);
+//     });
+
+//     socket.on("new message", (newMessageStatus) => {
+//         var chat = newMessageStatus.chat;
+//         if(!chat.users) {
+//             return console.log("chat.users not defined");
+//         }
+//         chat.users.forEach((user) => {
+//             if(user._id == newMessageStatus.sender._id) return;
+
+//             socket.in(user._id).emit("message received", newMessageReceived);
+//         });
+//     });
+// });
